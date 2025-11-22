@@ -9,10 +9,11 @@ from scipy.ndimage import gaussian_filter
 # os.system('cls')
 
 contact_data_norm = np.zeros((16,16))
-WINDOW_WIDTH = contact_data_norm.shape[1]*30
-WINDOW_HEIGHT = contact_data_norm.shape[0]*30
+# Make the window much larger for better visibility
+WINDOW_WIDTH = contact_data_norm.shape[1]*50
+WINDOW_HEIGHT = contact_data_norm.shape[0]*50
 cv2.namedWindow("Contact Data_left", cv2.WINDOW_NORMAL)
-cv2.resizeWindow("Contact Data_left",WINDOW_WIDTH, WINDOW_HEIGHT)
+cv2.resizeWindow("Contact Data_left", WINDOW_WIDTH, WINDOW_HEIGHT)
 THRESHOLD =12
 NOISE_SCALE =60
 
@@ -129,7 +130,10 @@ if __name__ == '__main__':
                 # Apply color map
                 colormap = cv2.applyColorMap(temp_filtered_data_scaled, cv2.COLORMAP_VIRIDIS)
 
-                cv2.imshow("Contact Data_left", colormap)
+                # Resize the image to match window size for better visibility
+                colormap_resized = cv2.resize(colormap, (WINDOW_WIDTH, WINDOW_HEIGHT), interpolation=cv2.INTER_NEAREST)
+
+                cv2.imshow("Contact Data_left", colormap_resized)
                 cv2.waitKey(1)
             time.sleep(0.01)
 
